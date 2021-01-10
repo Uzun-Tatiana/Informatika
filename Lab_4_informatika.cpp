@@ -89,6 +89,7 @@ void push_back(int*& arr, int& size, int value)
 
 int main()
 {
+        setlocale(0,""); // Включаем кириллицу
     const int n = 150;
     int* arr = new int[n]; // указатель под массив и выделяем под него память
     int size = 100;
