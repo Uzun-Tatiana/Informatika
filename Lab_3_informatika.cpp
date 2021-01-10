@@ -1,36 +1,41 @@
-﻿#include <cstdlib>
-#include <iostream> 
-#include <math.h>
-#define A 0.1 // константа а
-#define B 1.0 // константа и
-#define E 0.0001 // константа е
+#include <cmath>
+#include <iostream>
+#include <iomanip>
+
+using namespace std;
 
 int main()
 {
-    setlocale(0, ""); // Включаем кириллицу
+   int n = 10;
+   float e = 0.0001;
+   float y = 0, SN = 0, SE = 0, a = 0, b = 0;
+  
 
-    float x, k = (B - A) / 10.0, sn = 0, se = 0, t, y; // все значения 
-    int i, j = 1, n = 10; // значения степени в разных циклах
-
-    for (x = A; x <= B; x += k)// задаем интервал и шаг вычислений
+    for (float x = 0.1; x < 1; x += 0.09)
     {
-        sn = x; se = x;
+        a = x; 
+        SN = a;
 
-        for (i = 1; i <= n; i++)// вычисляем функцию при н
+        for (int i = 0; i < n - 1; i++)
         {
-            sn += (pow(-1, i) * pow(x, 2 * i) / (2 * i));
+            a *= ((-1) * x / ((2 * i + 2) * (2 * i + 3)));
+            SN += a;
         }
 
-        do {
-            t = (pow(-1, j) * pow(x, 2 * j) / (2 * j));// вычисляем функцию с точностью е
-            j++;
-            se += t;
-        }
-
-        while (t > E);// вычисляем саму функцию
+        b = x;
+        SE = b;
         y = cos(x);
+       
+        for (int j = 0; abs(b - SE) < e; j++)
+        {
+            b *= ((-1)  * x / ((2 * j + 2) * (2 * j + 3)));
+            SE += b;
+        }
 
-        printf("x=%.2f SN=%f SE=%f Y=%f\n", x, sn, se, y);// выводим все 10 циклов с новой строки
-
+        cout << "X = " << fixed << setprecision(2) << x;
+        cout << setw(10) << fixed << setprecision(7) << "SN = " << SN;
+        cout << setw(10) << fixed << setprecision(7) << "SE = " << SE;
+        cout << setw(10) << fixed << setprecision(7) << "Y = " << y << endl;
     }
+    return 0;
 }
