@@ -1,4 +1,4 @@
-﻿#include <iostream>
+#include <iostream>
 #include <ctime>
 
 using namespace std;
@@ -40,19 +40,15 @@ void del_zero(int*& arr, int& size)
         size--; // каждый раз при удаление уменьшаем массив
     }
 
-    for (int i = 0; i < size; i++)
+    for (int i = size - 1; i != 0; i--)
     {
-        if (newArr_del_zero[i] == 0 && arr[i + 1] == 0)
+
+        if (newArr_del_zero[i] == 0)
         {
-            for (int j = i; j < size - 2; j++)
-                newArr_del_zero[j] = newArr_del_zero[j + 2];
-            size -= 2;
-        }
-        else if (newArr_del_zero[i] == 0)
-        {
-            for (int j = i; j < size - 1; j++)
+            for (int j = i; j < size; j++)
                 newArr_del_zero[j] = newArr_del_zero[j + 1];
             size--;
+            break;
         }
     }
 
@@ -93,7 +89,6 @@ void push_back(int*& arr, int& size, int value)
 
 int main()
 {
-    setlocale(0, ""); // Включаем кириллицу
     const int n = 150;
     int* arr = new int[n]; // указатель под массив и выделяем под него память
     int size = 100;
@@ -105,17 +100,19 @@ int main()
     cout << "Первоначальный массив  : " << endl;
 
     ShowArray(arr, size); // вывод на экран первый созданый массив
-    cout << "Массив после удаления нулей : " << endl;
+    cout << "Массив после удаления последнего элеманта = 0 : " << endl;
     del_zero(arr, size); // функция удаления нулей
 
-    ShowArray(arr, size); // вывод на экранмассив  без нулей
+    ShowArray(arr, size); // вывод на экранмассив  без последнего элемента =0
 
     cout << "Укажите номер элемента после которого нужно добавить 100  - ";
     cin >> number;
     push_back(arr, size, number); // добавляем 100 после выбраного элемента
 
     cout << "Массив после добавления 100 в выбранный элемент: " << endl;
-    ShowArray(arr, size); // вывод на экран новый массив с добавлением 100   
+    ShowArray(arr, size); // вывод на экран новый массив с добавлением 100
+
+    delete[] arr;   // отчищаем память      
 
     return 0;
 }
