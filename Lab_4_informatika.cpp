@@ -63,17 +63,17 @@ void push_back(int*& arr, int& size, int value)
 
     if (value > 0 && value < size)// проверка правильности ввода
     {
-        // Присваеваем элементы к новому масству
+        // Присваеваем элементы к новому массиву
         for (int i = 0; i < size; i++)
         {
             newArr[i] = arr[i];
         }
 
         // добавляем 100 после выбраной позиции value
-        for (int i = size; i >= value - 1; i--)
+        for (int i = size; i >= value - 1; i--) 
         {
             newArr[i + 1] = arr[i];
-            newArr[value - 1] = 100;// добовляем значени 100
+            newArr[value + 1] = 100;// добовляем значени 100
         }
     }
     else
@@ -89,11 +89,11 @@ void push_back(int*& arr, int& size, int value)
 
 int main()
 {
-        setlocale(0,""); // Включаем кириллицу
+    setlocale(0, ""); // Включаем кириллицу
     const int n = 150;
     int* arr = new int[n]; // указатель под массив и выделяем под него память
     int size = 100;
-    int number = 1;
+    int number = 0;
     cout << "Укажите размер массива от 0 до 100 :  ";
     cin >> size;
 
