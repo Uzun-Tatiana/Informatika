@@ -4,33 +4,50 @@
 
 using namespace std;
 
+long double fact(int N)
+{
+    if (N < 0)
+        return 0;
+    if (N == 0)
+        return 1;
+    else
+        return N * fact(N - 1);
+}
 int main()
 {
-   int n = 10;
-   float e = 0.0001;
-   float y = 0, SN = 0, SE = 0, a = 0, b = 0;
-  
+    int n = 10;
+    double e = 0.0001;
+    double y = 0, SN = 0, SE = 0, a = 0, b = 0;
 
-    for (float x = 0.1; x < 1; x += 0.09)
+
+    for (double x = 0.1; x < 1; x += 0.09)
     {
-        a = x; 
-        SN = a;
-
-        for (int i = 0; i < n - 1; i++)
+        //SN
+        SN = 1;
+        for (int i = 1; i <= n; i++)
         {
-            a *= ((-1) * x / ((2 * i + 2) * (2 * i + 3)));
+            a = pow(x, 2 * i) / fact(2 * i);
+            if (i % 2 != 0)
+                a *= -1;
             SN += a;
         }
 
-        b = x;
-        SE = b;
-        y = cos(x);
-       
-        for (int j = 0; abs(b - SE) < e; j++)
+        //SE
+        SE = 1;
+        double past = 0;
+        int iter = 1;
+        do
         {
-            b *= ((-1)  * x / ((2 * j + 2) * (2 * j + 3)));
+            past = b;
+            b = pow(x, 2 * iter) / fact(2 * iter);
+            if (iter % 2 != 0)
+                b *= -1;
             SE += b;
-        }
+            iter++;
+        } while (abs(b - past) > e);
+
+        //Y
+        y = cos(x);
 
         cout << "X = " << fixed << setprecision(2) << x;
         cout << setw(10) << fixed << setprecision(7) << "SN = " << SN;
